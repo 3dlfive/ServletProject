@@ -18,10 +18,14 @@ public record User(String name,String url) {
                         </tr>                    
                         <tr>
                           <td> 
-                            <button>Yes</button>
+                        
                           </td>
                           <td>
-                            <button>No</button>
+                           <form action="" method="post">
+                    
+                               <button type="submit" name="des_button" value="false">no</button>
+                               <button type="submit" name="des_button" value="true">Yes</button>
+                           </form>
                           </td>
                         </tr>
                         """.formatted(name, url);
