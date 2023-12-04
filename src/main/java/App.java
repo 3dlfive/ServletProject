@@ -1,5 +1,6 @@
 import Servlets.Likes.LikedDB;
 import Servlets.Likes.LikedServlet;
+import Servlets.Messages.MessagesServlet;
 import Servlets.StylesServlet;
 import Servlets.Users.DaoUsersList;
 import Servlets.Users.User;
@@ -28,6 +29,12 @@ public class App {
 
                 LikedServlet liked = new LikedServlet(selData);
                 handler.addServlet(new ServletHolder(liked), "/liked");
+
+            }
+            {
+
+                MessagesServlet chat = new MessagesServlet();
+                handler.addServlet(new ServletHolder(chat), "/messages/*");
 
             }
             {
