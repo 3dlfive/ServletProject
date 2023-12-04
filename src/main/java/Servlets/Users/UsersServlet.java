@@ -23,4 +23,11 @@ public class UsersServlet extends HttpServlet {
         }
 
     }
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        Boolean decision = Boolean.parseBoolean(req.getParameter("des_button"));
+        System.out.println(decision);
+        this.doGet(req,resp);
+    }
 }
