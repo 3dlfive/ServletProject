@@ -22,7 +22,7 @@ List of likes:
                 ${row.id()}
             </td>
             <td>
-                ${row.name()}
+                <a href="/messages/${row.id()-1}" target="_blank">${row.name()}</a>
             </td>
             <td><img src="${row.url()}"  width="100" height="125"></td>
 
