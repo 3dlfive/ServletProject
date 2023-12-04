@@ -1,4 +1,4 @@
-import Servlets.SelectedUsers.SelectedDB;
+import Servlets.Likes.LikedDB;
 import Servlets.Users.DaoUsersList;
 import Servlets.Users.User;
 import Servlets.Users.UsersServlet;
@@ -12,7 +12,7 @@ public class App {
             ServletContextHandler handler = new ServletContextHandler();
 
             handler.addServlet("Servlets.HelloServlet", "/hello");
-            SelectedDB selData = new SelectedDB();
+            LikedDB selData = new LikedDB();
             {
                 DaoUsersList users = new DaoUsersList();
                 users.put(new User("Kateryna", "https://images.unsplash.com/photo-1601288496920-b6154fe3626a?q=80&w=1826&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"));

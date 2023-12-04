@@ -1,8 +1,8 @@
-package Servlets.SelectedUsers;
+package Servlets.Likes;
 
 import Servlets.Users.User;
 
-public interface Selected {
+public interface Liked {
 
     void put(User x);
 
