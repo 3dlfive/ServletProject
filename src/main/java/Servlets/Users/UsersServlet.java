@@ -1,6 +1,6 @@
 package Servlets.Users;
 
-import Servlets.SelectedUsers.SelectedDB;
+import Servlets.Likes.LikedDB;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,11 +12,11 @@ import java.sql.SQLException;
 
 public class UsersServlet extends HttpServlet {
     private final DaoUsersList users;
-    private final SelectedDB selected;
+    private final LikedDB likes;
     private int counter = 0;
-    public UsersServlet(DaoUsersList users, SelectedDB selected) {
+    public UsersServlet(DaoUsersList users, LikedDB likes) {
         this.users = users;
-        this.selected = selected;
+        this.likes = likes;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class UsersServlet extends HttpServlet {
 
         Boolean decision = Boolean.parseBoolean(req.getParameter("des_button"));
         String name = req.getParameter("name");
-        selected.put(users.findFirst(name).get());
+        likes.put(users.findFirst(name).get());
 
         if(counter == users.size()-1){counter=0;} else {counter++;}
 

@@ -1,10 +1,10 @@
-package Servlets.SelectedUsers;
+package Servlets.Likes;
 
 import Servlets.Users.User;
 
 import java.util.ArrayList;
 
-public class SelectedDB implements Selected{
+public class LikedDB implements Liked{
 
 
     private final ArrayList<User> data = new ArrayList<User>();
