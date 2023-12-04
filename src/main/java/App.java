@@ -1,5 +1,6 @@
 import Servlets.Likes.LikedDB;
 import Servlets.Likes.LikedServlet;
+import Servlets.StylesServlet;
 import Servlets.Users.DaoUsersList;
 import Servlets.Users.User;
 import Servlets.Users.UsersServlet;
@@ -29,6 +30,12 @@ public class App {
                 handler.addServlet(new ServletHolder(liked), "/liked");
 
             }
+            {
+                    handler.addServlet(new ServletHolder(new StylesServlet("static")), "/static/*");
+
+
+            }
+
             server.setHandler(handler);
             server.start();
             server.join();
