@@ -19,4 +19,10 @@ public class UsersList implements Users{
     public Optional<User> findFirst(String name) {
         return data.stream().filter(el->el.name().equals(name)).findFirst();
     }
+    public User getByID(int id){
+        return data.get(id);
+    }
+    public int size(){
+        return data.size();
+    }
 }
