@@ -33,7 +33,6 @@ public class LikedServlet extends HttpServlet {
 
 
         data.put("rows",likes.getAll());
-        System.out.println(data);
         try (PrintWriter w = resp.getWriter()) {
             Template template = cfg.getTemplate("liked.ftl");
             template.process(data, w);
