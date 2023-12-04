@@ -34,12 +34,17 @@ public class UsersServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        Boolean decision = Boolean.parseBoolean(req.getParameter("des_button"));
+        boolean decision = Boolean.parseBoolean(req.getParameter("des_button"));
         String name = req.getParameter("name");
         if (decision) likes.put(users.findFirst(name).get());
 
-        if(counter == users.size()-1){counter=0;} else {counter++;}
+        if(counter == users.size()-1){counter=0;
+            resp.sendRedirect("/liked");
+        } else {
+            counter++;
+            this.doGet(req,resp);
+        }
 
-        this.doGet(req,resp);
+
     }
 }
