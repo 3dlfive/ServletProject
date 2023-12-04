@@ -12,7 +12,7 @@ import java.io.PrintWriter;
 public class UsersServlet extends HttpServlet {
     private final UsersList users;
     private final SelectedDB selected;
-
+    private int counter = 0;
     public UsersServlet(UsersList users, SelectedDB selected) {
         this.users = users;
         this.selected = selected;
@@ -22,8 +22,10 @@ public class UsersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try (PrintWriter w = resp.getWriter()) {
             w.println("<html><body><table>");
-            users.get().forEach(x -> w.println(x.toHtml()));
+//            users.get().forEach(x -> w.println(x.toHtml()));
+            w.println(users.getByID(counter).toHtml());
             w.println("</table></body></html>");
+            System.out.println("yes");
         }
 
     }
@@ -35,6 +37,8 @@ public class UsersServlet extends HttpServlet {
         selected.put(users.findFirst(name).get());
 
         System.out.println(selected.toString());
+        if(counter == users.size()-1){counter=0;} else {counter++;}
+
         this.doGet(req,resp);
     }
 }
