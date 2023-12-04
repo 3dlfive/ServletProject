@@ -33,8 +33,5 @@ public record User(String name,String url) {
                         """.formatted(name, url);
     }
 
-    @Override
-    public String name() {
-        return name;
-    }
+
 }

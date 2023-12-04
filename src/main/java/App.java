@@ -1,4 +1,5 @@
 import Servlets.Likes.LikedDB;
+import Servlets.Likes.LikedServlet;
 import Servlets.Users.DaoUsersList;
 import Servlets.Users.User;
 import Servlets.Users.UsersServlet;
@@ -22,7 +23,12 @@ public class App {
                 UsersServlet usersServlet = new UsersServlet(users, selData);
                 handler.addServlet(new ServletHolder(usersServlet), "/users");
             }
+            {
 
+                LikedServlet liked = new LikedServlet(selData);
+                handler.addServlet(new ServletHolder(liked), "/liked");
+
+            }
             server.setHandler(handler);
             server.start();
             server.join();
