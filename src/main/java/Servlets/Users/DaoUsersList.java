@@ -21,6 +21,9 @@ public class DaoUsersList implements Users{
     public Optional<User> findFirst(String name) {
         return data.stream().filter(el->el.name().equals(name)).findFirst();
     }
+    public Optional<User> findbyID(int id) {
+        return Optional.ofNullable(data.get(id));
+    }
 
     public int size(){
         return data.size();

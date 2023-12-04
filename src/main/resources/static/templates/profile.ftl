@@ -28,12 +28,12 @@
                 </div>
                 <div class="col-12 col-lg-6">
                     <form action="" method="post" id="myForm">
-                    <button type="submit"  class="btn btn-outline-danger btn-block" name="des_button" value="false,${user.name()}"><span class="fa fa-times"></span> Dislike</button>
+                    <button type="submit"  class="btn btn-outline-danger btn-block" name="des_button" value="false,${user.id()}"><span class="fa fa-times"></span> Dislike</button>
                     </form>
                 </div>
                 <div class="col-12 col-lg-6">
                     <form action="" method="post" id="myForm">
-                    <button type="submit" class="btn btn-outline-success btn-block" name="des_button" value="true,${user.name()}"><span class="fa fa-heart"></span> Like</button>
+                    <button type="submit" class="btn btn-outline-success btn-block" name="des_button" value="true,${user.id()}"><span class="fa fa-heart"></span> Like</button>
                     </form>
 
                 </div>
