@@ -58,7 +58,7 @@ public class UsersServlet extends HttpServlet {
         System.out.println(decision);
         int id = Integer.parseInt(req.getParameter("des_button").substring(req.getParameter("des_button").indexOf(",")+1));
         System.out.println(id);
-        if (decision) likes.put(users.findbyID(id).get());
+        if (decision) likes.put(users.findbyID(id-1).get());
 
         if(counter == users.size()-1){counter=0;
             resp.sendRedirect("/liked");
