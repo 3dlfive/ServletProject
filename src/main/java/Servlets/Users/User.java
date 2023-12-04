@@ -13,7 +13,7 @@ public record User(String name,String url) {
                             <tr>
                              <form action="" method="post">
                               <td >
-                                <input name="name" value="%s"  readonly/></td>
+                                <input name="name" value="%s"  readonly style="all: unset;border:5px dotted teal;background-color:#eafafb;"/></td>
                               </td>
                               <td>
                               <img src="%s" alt="Girl in a jacket" width="100" height="125">
@@ -33,8 +33,5 @@ public record User(String name,String url) {
                         """.formatted(name, url);
     }
 
-    @Override
-    public String name() {
-        return name;
-    }
+
 }

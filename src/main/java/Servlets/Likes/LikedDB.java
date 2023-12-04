@@ -18,6 +18,9 @@ public class LikedDB implements Liked{
     public Iterable<User> get() {
         return data;
     }
+    public ArrayList<User> getAll() {
+        return data;
+    }
 
     @Override
     public String toString() {

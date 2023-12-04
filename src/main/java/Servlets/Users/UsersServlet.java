@@ -36,7 +36,7 @@ public class UsersServlet extends HttpServlet {
 
         Boolean decision = Boolean.parseBoolean(req.getParameter("des_button"));
         String name = req.getParameter("name");
-        likes.put(users.findFirst(name).get());
+        if (decision) likes.put(users.findFirst(name).get());
 
         if(counter == users.size()-1){counter=0;} else {counter++;}
 
