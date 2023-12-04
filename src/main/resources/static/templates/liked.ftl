@@ -11,7 +11,7 @@
 List of likes:
 <table border="1">
     <thead>
-    <td>#</td>
+    <td>ID#</td>
     <td>Name</td>
     <td>Photo</td>
     </thead>
@@ -19,7 +19,7 @@ List of likes:
     <#list rows as row>
         <tr>
             <td>
-                somenumber
+                ${row.id()}
             </td>
             <td>
                 ${row.name()}

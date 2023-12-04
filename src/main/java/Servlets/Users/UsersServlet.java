@@ -56,9 +56,9 @@ public class UsersServlet extends HttpServlet {
 
         boolean decision = Boolean.parseBoolean(req.getParameter("des_button").substring(0,req.getParameter("des_button").indexOf(",")));
         System.out.println(decision);
-        String name = req.getParameter("des_button").substring(req.getParameter("des_button").indexOf(",")+1);
-        System.out.println(name);
-        if (decision) likes.put(users.findFirst(name).get());
+        int id = Integer.parseInt(req.getParameter("des_button").substring(req.getParameter("des_button").indexOf(",")+1));
+        System.out.println(id);
+        if (decision) likes.put(users.findbyID(id-1).get());
 
         if(counter == users.size()-1){counter=0;
             resp.sendRedirect("/liked");

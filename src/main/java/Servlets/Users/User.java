@@ -1,6 +1,6 @@
 package Servlets.Users;
 
-public record User(String name,String url) {
+public record User(String name,String url,int id) {
     @Override
     public String toString() {
         return "Name %s \n link %s".formatted(name, url);

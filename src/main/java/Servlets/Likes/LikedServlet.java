@@ -29,7 +29,6 @@ public class LikedServlet extends HttpServlet {
         cfg.setDirectoryForTemplateLoading(new File(ResourcesOps.dirUnsafe("static/templates")));
 
         HashMap<String, Object> data = new HashMap<>();
-        likes.get().forEach(el-> System.out.println(el.name()));
 
 
         data.put("rows",likes.getAll());
