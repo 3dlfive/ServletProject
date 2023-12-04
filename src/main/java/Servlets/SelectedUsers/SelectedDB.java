@@ -1,9 +1,12 @@
-package Servlets.Users;
+package Servlets.SelectedUsers;
+
+import Servlets.Users.User;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
-public class UsersList implements Users{
+public class SelectedDB implements Selected{
+
+
     private final ArrayList<User> data = new ArrayList<User>();
 
     @Override
@@ -16,7 +19,10 @@ public class UsersList implements Users{
         return data;
     }
 
-    public Optional<User> findFirst(String name) {
-        return data.stream().filter(el->el.name().equals(name)).findFirst();
+    @Override
+    public String toString() {
+        return "SelectedDB{" +
+                "data=" + data +
+                '}';
     }
 }

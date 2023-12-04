@@ -1,5 +1,7 @@
 package Servlets.Users;
 
+import Servlets.SelectedUsers.SelectedDB;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,9 +11,11 @@ import java.io.PrintWriter;
 
 public class UsersServlet extends HttpServlet {
     private final UsersList users;
+    private final SelectedDB selected;
 
-    public UsersServlet(UsersList users) {
+    public UsersServlet(UsersList users, SelectedDB selected) {
         this.users = users;
+        this.selected = selected;
     }
 
     @Override
@@ -27,7 +31,10 @@ public class UsersServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         Boolean decision = Boolean.parseBoolean(req.getParameter("des_button"));
-        System.out.println(decision);
+        String name = req.getParameter("name");
+        selected.put(users.findFirst(name).get());
+
+        System.out.println(selected.toString());
         this.doGet(req,resp);
     }
 }
