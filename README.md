@@ -12,3 +12,5 @@ Api lists:
 /login
 ```
 
+## DB schema
+<img width="326" alt="image" src="https://github.com/3dlfive/ServletProject/assets/29129086/cf5b3ce9-5761-4ddd-9b71-e79870052000">
