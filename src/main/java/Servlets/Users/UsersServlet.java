@@ -8,12 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 
 public class UsersServlet extends HttpServlet {
-    private final UsersList users;
+    private final DaoUsersList users;
     private final SelectedDB selected;
     private int counter = 0;
-    public UsersServlet(UsersList users, SelectedDB selected) {
+    public UsersServlet(DaoUsersList users, SelectedDB selected) {
         this.users = users;
         this.selected = selected;
     }
@@ -23,9 +24,10 @@ public class UsersServlet extends HttpServlet {
         try (PrintWriter w = resp.getWriter()) {
             w.println("<html><body><table>");
 //            users.get().forEach(x -> w.println(x.toHtml()));
-            w.println(users.getByID(counter).toHtml());
+            w.println(users.find(counter).get().toHtml());
             w.println("</table></body></html>");
-            System.out.println("yes");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -36,7 +38,6 @@ public class UsersServlet extends HttpServlet {
         String name = req.getParameter("name");
         selected.put(users.findFirst(name).get());
 
-        System.out.println(selected.toString());
         if(counter == users.size()-1){counter=0;} else {counter++;}
 
         this.doGet(req,resp);
