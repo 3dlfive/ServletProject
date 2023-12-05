@@ -10,34 +10,41 @@ services:
       POSTGRES_DB: 'tinder_step'
     ports:
       - '5432:5432'
-    networks:
-      - dev-network
+
     volumes:
       - ./pgfiles:/var/lib/postgresql/data
     container_name: pg_0
-
-  app:
-    restart: unless-stopped
-    build: .
-    environment:
-      JDBC_DATABASE_URL : "jdbc:postgresql://localhost:5432/tinder_step"
-      JDBC_DATABASE_LOGIN : "postgres"
-      JDBC_DATABASE_PASSWORD : "pg123456"
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
     ports:
-      - '8080:8080'
-    networks:
-      - dev-network
-    volumes:
-      - ../../../ro:/ro:ro
-      - ../../../rw:/rw
-      - ../../../Downloads:/dl:ro
-      - ../.data/pg96:/var/lib/postgresql/data/
-    container_name: pg_0
-    depends_on:
-      - postgres
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: test@test.com
+      PGADMIN_DEFAULT_PASSWORD: test
+#  app:
+#    restart: unless-stopped
+#    build: .
+#    environment:
+#      JDBC_DATABASE_URL : "jdbc:postgresql://localhost:5432/tinder_step"
+#      JDBC_DATABASE_LOGIN : "postgres"
+#      JDBC_DATABASE_PASSWORD : "pg123456"
+#    ports:
+#      - '8080:8080'
+#    networks:
+#      - dev-network
+#    volumes:
+#      - ../../../ro:/ro:ro
+#      - ../../../rw:/rw
+#      - ../../../Downloads:/dl:ro
+#      - ../.data/pg96:/var/lib/postgresql/data/
+#    container_name: pg_0
+#    depends_on:
+#      - postgres
 networks:
   dev-network:
-    external:
-      name: dev-net
+    external: false
+    name: dev-network
 #
 #
