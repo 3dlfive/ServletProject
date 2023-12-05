@@ -5,8 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>DanIt</groupId>
-    <artifactId>junit5-jupiter-starter-maven</artifactId>
+    <artifactId>tinder-app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -135,5 +136,7 @@
 
         </plugins>
     </build>
+    <packaging>jar</packaging>
+
 
 </project>
