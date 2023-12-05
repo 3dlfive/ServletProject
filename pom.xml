@@ -15,6 +15,10 @@
         <maven.plugin.validation>DEFAULT</maven.plugin.validation>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+        <!-- Update the database connection details -->
+        <database.url>jdbc:postgresql://localhost:5432/tinder_step</database.url>
+        <database.user>postgres</database.user>
+        <database.password>pg123456</database.password>
 
     </properties>
 
@@ -63,11 +67,7 @@
             <artifactId>postgresql</artifactId>
             <version>42.6.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
-            <version>9.21.0</version>
-        </dependency>
+
     </dependencies>
 
 
@@ -132,7 +132,18 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>3.3.1</version> <!-- Use the latest version -->
             </plugin>
-
+            <!-- Flyway plugin configuration -->
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>9.21.0</version>
+                <configuration>
+                    <url>${database.url}</url>
+                    <user>${database.user}</user>
+                    <password>${database.password}</password>
+                    <baselineOnMigrate>true</baselineOnMigrate>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

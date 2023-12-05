@@ -1,4 +1,5 @@
 import Helpers.Database;
+
 import Servlets.Likes.LikedDB;
 import Servlets.Likes.LikedServlet;
 import Servlets.Messages.MessagesServlet;
@@ -20,7 +21,7 @@ public class App {
             Database db = new Database("jdbc:postgresql://localhost:5432/tinder_step","postgres","pg123456");
             Connection conn = db.mkConn();
 
-
+            //Servlets
             handler.addServlet("Servlets.HelloServlet", "/hello");
             LikedDB selData = new LikedDB();
             {
