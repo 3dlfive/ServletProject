@@ -1,3 +1,4 @@
+import Helpers.Database;
 import Servlets.Likes.LikedDB;
 import Servlets.Likes.LikedServlet;
 import Servlets.Messages.MessagesServlet;
@@ -9,10 +10,16 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
+import java.sql.Connection;
+
 public class App {
         public static void main(String[] args) throws Exception {
             Server server = new Server(8080);
             ServletContextHandler handler = new ServletContextHandler();
+            //DB conection
+            Database db = new Database("jdbc:postgresql://localhost:5432/tinder_step","postgres","pg123456");
+            Connection conn = db.mkConn();
+
 
             handler.addServlet("Servlets.HelloServlet", "/hello");
             LikedDB selData = new LikedDB();
