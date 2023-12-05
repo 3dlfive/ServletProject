@@ -1,7 +1,9 @@
 package Servlets.Users;
 
 import Helpers.ResourcesOps;
+import Servlets.Likes.Action;
 import Servlets.Likes.LikedDB;
+import Servlets.Likes.LikedDBDao;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -17,10 +19,10 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 public class UsersServlet extends HttpServlet {
-    private final DaoUsersList users;
-    private final LikedDB likes;
-    private int counter = 0;
-    public UsersServlet(DaoUsersList users, LikedDB likes) {
+    private final DaoUsersSQL users;
+    private final LikedDBDao likes;
+    private int counter = 1;
+    public UsersServlet(DaoUsersSQL users, LikedDBDao likes) {
         this.users = users;
         this.likes = likes;
     }
@@ -58,13 +60,30 @@ public class UsersServlet extends HttpServlet {
         System.out.println(decision);
         int id = Integer.parseInt(req.getParameter("des_button").substring(req.getParameter("des_button").indexOf(",")+1));
         System.out.println(id);
-        if (decision) likes.put(users.findbyID(id-1).get());
 
-        if(counter == users.size()-1){counter=0;
-            resp.sendRedirect("/liked");
+        if (decision) {
+            try {
+                likes.save(new Action(1,id,"liked"));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         } else {
-            counter++;
-            this.doGet(req,resp);
+            try {
+                likes.save(new Action(1,id,"unliked"));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        try {
+            if(counter == users.size()){counter=1;
+                resp.sendRedirect("/liked");
+            } else {
+                counter++;
+                this.doGet(req,resp);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
 

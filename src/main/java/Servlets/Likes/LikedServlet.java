@@ -14,13 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LikedServlet extends HttpServlet {
-    private final LikedDB likes;
+    private final LikedDBDao likes;
 
-    public LikedServlet(LikedDB likes) {
+    public LikedServlet(LikedDBDao likes) {
         this.likes = likes;
     }
     @Override
@@ -30,8 +32,17 @@ public class LikedServlet extends HttpServlet {
 
         HashMap<String, Object> data = new HashMap<>();
 
+        try {
+            System.out.println("tesst" +likes.findAll());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        try {
 
-        data.put("rows",likes.getAll());
+            data.put("rows",likes.findAll());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         try (PrintWriter w = resp.getWriter()) {
             Template template = cfg.getTemplate("liked.ftl");
             template.process(data, w);

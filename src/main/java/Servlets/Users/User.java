@@ -1,6 +1,10 @@
 package Servlets.Users;
 
-public record User(String name,String url,int id) {
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Optional;
+
+public record User(Integer id,String name, String url, String pwd,String created) {
     @Override
     public String toString() {
         return "Name %s \n link %s".formatted(name, url);
@@ -32,6 +36,16 @@ public record User(String name,String url,int id) {
                       
                         """.formatted(name, url);
     }
+    static User fromRs(ResultSet rs) throws SQLException {
+        int id = rs.getInt("id");
+        String name = rs.getString("name");
+        String url = rs.getString("url");
+        String pwd = rs.getString("pwd");
+        String cdate = rs.getString("create_at");
+
+        return new User(id, name, url,pwd,cdate);
+    }
+
 
 
 }
