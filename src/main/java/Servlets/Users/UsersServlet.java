@@ -17,10 +17,10 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 public class UsersServlet extends HttpServlet {
-    private final DaoUsersList users;
+    private final DaoUsersSQL users;
     private final LikedDB likes;
-    private int counter = 0;
-    public UsersServlet(DaoUsersList users, LikedDB likes) {
+    private int counter = 1;
+    public UsersServlet(DaoUsersSQL users, LikedDB likes) {
         this.users = users;
         this.likes = likes;
     }
@@ -58,13 +58,24 @@ public class UsersServlet extends HttpServlet {
         System.out.println(decision);
         int id = Integer.parseInt(req.getParameter("des_button").substring(req.getParameter("des_button").indexOf(",")+1));
         System.out.println(id);
-        if (decision) likes.put(users.findbyID(id-1).get());
 
-        if(counter == users.size()-1){counter=0;
-            resp.sendRedirect("/liked");
-        } else {
-            counter++;
-            this.doGet(req,resp);
+        if (decision) {
+            try {
+                likes.put(users.find(id).get());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        try {
+            if(counter == users.size()){counter=1;
+                resp.sendRedirect("/liked");
+            } else {
+                counter++;
+                this.doGet(req,resp);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
 

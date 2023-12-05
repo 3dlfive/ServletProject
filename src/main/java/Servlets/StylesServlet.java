@@ -28,7 +28,7 @@ public class StylesServlet extends HttpServlet {
         String prefix = ResourcesOps.dirUnsafe(root);
         String fileName = req.getPathInfo();
         String fullName = prefix + fileName;
-        Path path = Paths.get(fullName.substring(1));
+        Path path = Paths.get(fullName.substring(1)); //windows , linux mojet ne vzletet
         Stream<String> lines = Files.lines(path);
 
         try (PrintWriter w = resp.getWriter()) {
