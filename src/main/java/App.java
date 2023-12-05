@@ -1,6 +1,7 @@
 import Helpers.Database;
 
 import Servlets.Likes.LikedDB;
+import Servlets.Likes.LikedDBDao;
 import Servlets.Likes.LikedServlet;
 import Servlets.Messages.MessagesServlet;
 import Servlets.StylesServlet;
@@ -24,14 +25,14 @@ public class App {
 
             //Servlets
             handler.addServlet("Servlets.HelloServlet", "/hello");
-            LikedDB selData = new LikedDB();
+            LikedDBDao selData = new LikedDBDao(conn);
+
             {
                 DaoUsersSQL users = new DaoUsersSQL(conn);
                 UsersServlet usersServlet = new UsersServlet(users, selData);
                 handler.addServlet(new ServletHolder(usersServlet), "/users");
             }
             {
-
                 LikedServlet liked = new LikedServlet(selData);
                 handler.addServlet(new ServletHolder(liked), "/liked");
 

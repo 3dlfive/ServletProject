@@ -1,10 +1,10 @@
 CREATE TABLE public.actions
 (
-    id serial not null primary key,
+    op_id serial not null primary key,
     user_id int  NOT NULL,
     profile_id int  NOT NULL,
     action text NOT NULL,
-    at date NOT NULL DEFAULT NOW(),
+    op_at date NOT NULL DEFAULT NOW(),
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (profile_id) REFERENCES users(id)
 );

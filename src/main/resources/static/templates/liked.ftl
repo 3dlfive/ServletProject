@@ -19,10 +19,10 @@ List of likes:
     <#list rows as row>
         <tr>
             <td>
-                ${row.id()}
+                ${row.profile_id()}
             </td>
             <td>
-                <a href="/messages/${row.id()-1}" target="_blank">${row.name()}</a>
+                <a href="/messages/${row.profile_id()}" target="_blank">${row.profileName()}</a>
             </td>
             <td><img src="${row.url()}"  width="100" height="125"></td>
 

@@ -1,7 +1,9 @@
 package Servlets.Users;
 
 import Helpers.ResourcesOps;
+import Servlets.Likes.Action;
 import Servlets.Likes.LikedDB;
+import Servlets.Likes.LikedDBDao;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -18,9 +20,9 @@ import java.util.HashMap;
 
 public class UsersServlet extends HttpServlet {
     private final DaoUsersSQL users;
-    private final LikedDB likes;
+    private final LikedDBDao likes;
     private int counter = 1;
-    public UsersServlet(DaoUsersSQL users, LikedDB likes) {
+    public UsersServlet(DaoUsersSQL users, LikedDBDao likes) {
         this.users = users;
         this.likes = likes;
     }
@@ -61,7 +63,13 @@ public class UsersServlet extends HttpServlet {
 
         if (decision) {
             try {
-                likes.put(users.find(id).get());
+                likes.save(new Action(1,id,"liked"));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            try {
+                likes.save(new Action(1,id,"unliked"));
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
