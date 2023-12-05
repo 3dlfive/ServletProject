@@ -11,8 +11,8 @@ public record Message(int sender_id,String sender_name,String sender_url,int rec
 
         String sender_name = rs.getString("sender_name");
         int sender_id = rs.getInt("sender_id");
-        int receiver_id = rs.getInt("reciver_id");
-        String receiver_name = rs.getString("reciver_name");
+        int receiver_id = rs.getInt("receiver_id");
+        String receiver_name = rs.getString("receiver_name");
         String receiver_url = rs.getString("receiver_url");
         String sender_url = rs.getString("sender_url");
 

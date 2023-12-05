@@ -1,13 +1,12 @@
 import Helpers.Database;
 
-import Servlets.Likes.LikedDB;
 import Servlets.Likes.LikedDBDao;
 import Servlets.Likes.LikedServlet;
+import Servlets.Messages.Message;
+import Servlets.Messages.MessagesDao;
 import Servlets.Messages.MessagesServlet;
 import Servlets.StylesServlet;
-import Servlets.Users.DaoUsersList;
 import Servlets.Users.DaoUsersSQL;
-import Servlets.Users.User;
 import Servlets.Users.UsersServlet;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -38,8 +37,7 @@ public class App {
 
             }
             {
-
-                MessagesServlet chat = new MessagesServlet();
+                MessagesServlet chat = new MessagesServlet(new MessagesDao(conn));
                 handler.addServlet(new ServletHolder(chat), "/messages/*");
 
             }
