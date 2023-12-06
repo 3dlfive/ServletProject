@@ -2,10 +2,10 @@ UPDATE public.users SET
     email = 'sensor'::character varying WHERE
     id = 3;
 UPDATE public.users SET
-    email = 'test'::character varying WHERE
+    email = 'test@test'::character varying WHERE
     id = 1;
 UPDATE public.users SET
-    email = 'tests'::character varying WHERE
+    email = 't@t'::character varying WHERE
     id = 2;
 UPDATE public.users SET
     email = 'admin'::character varying WHERE
