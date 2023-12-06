@@ -38,7 +38,7 @@ public class LikedDBDao implements DAO<Action> {
 
     @Override
     public List<Action> findAll() throws SQLException {
-        String select = "select user_id,profile_id, action, users.name as profile_name,op_at,users.url from actions join users on actions.profile_id = users.id where ACTION LIKE 'liked'";
+        String select = "select user_id,profile_id, action, users.name,users.url as profile_name,op_at from actions join users on actions.profile_id = users.id where ACTION LIKE 'liked'";
         PreparedStatement st = conn.prepareStatement(select);
         ResultSet rs = st.executeQuery();
         ArrayList<Action> data = new ArrayList<>();
@@ -54,5 +54,16 @@ public class LikedDBDao implements DAO<Action> {
     @Override
     public void update(Action liked) throws SQLException {
 
+    }
+    public Optional<Integer> reciveSenderId(String uuid) throws SQLException {
+        String select = "select user_id from login where session_id = ?::uuid;";
+        PreparedStatement st = conn.prepareStatement(select);
+        st.setString(1, uuid);
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+            return Optional.of(rs.getInt("user_id"));
+        }else {
+            return Optional.empty();
+        }
     }
 }

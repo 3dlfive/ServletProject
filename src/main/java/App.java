@@ -2,8 +2,8 @@ import Helpers.Database;
 
 import Servlets.Likes.LikedDBDao;
 import Servlets.Likes.LikedServlet;
+import Servlets.Login.LoginService;
 import Servlets.Login.LoginServlet;
-import Servlets.Messages.Message;
 import Servlets.Messages.MessagesDao;
 import Servlets.Messages.MessagesServlet;
 import Servlets.StylesServlet;
@@ -43,7 +43,8 @@ public class App {
 
             }
             {
-                LoginServlet login = new LoginServlet();
+
+                LoginServlet login = new LoginServlet(new LoginService(conn));
                 handler.addServlet(new ServletHolder(login), "/login");
 
             }
