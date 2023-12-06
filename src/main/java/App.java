@@ -2,6 +2,7 @@ import Helpers.Database;
 
 import Servlets.Likes.LikedDBDao;
 import Servlets.Likes.LikedServlet;
+import Servlets.Login.LoginServlet;
 import Servlets.Messages.Message;
 import Servlets.Messages.MessagesDao;
 import Servlets.Messages.MessagesServlet;
@@ -39,6 +40,11 @@ public class App {
             {
                 MessagesServlet chat = new MessagesServlet(new MessagesDao(conn));
                 handler.addServlet(new ServletHolder(chat), "/messages/*");
+
+            }
+            {
+                LoginServlet login = new LoginServlet();
+                handler.addServlet(new ServletHolder(login), "/login");
 
             }
             {
