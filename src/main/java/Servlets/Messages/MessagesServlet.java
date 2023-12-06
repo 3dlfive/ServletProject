@@ -39,15 +39,14 @@ public class MessagesServlet extends HttpServlet {
 
         try {
             Optional<Integer> senders_iid = messages.reciveSenderId(cookies);
-            System.out.println(senders_iid.get());
             data.put("messages",messages.findAllUsersMessagetoReciver(senders_iid.get(), Integer.parseInt(id)));
             try{
-                data.put("sender_id",messages.findAllUsersMessagetoReciver(senders_iid.get(), Integer.parseInt(id)).get(0).sender_id());
-                data.put("sender_name",messages.findAllUsersMessagetoReciver(senders_iid.get(), Integer.parseInt(id)).get(0).sender_name());
+                data.put("sender_id",senders_iid.get());
+                data.put("sender_name",messages.getSenderName(senders_iid.get()));
             } catch (IndexOutOfBoundsException e){
                 // for new chat
-                data.put("sender_id",1);
-                data.put("sender_name",Integer.parseInt(id));
+                data.put("sender_id",senders_iid.get());
+                data.put("sender_name",messages.getSenderName(senders_iid.get()));
             }
 
 

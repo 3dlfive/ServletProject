@@ -29,6 +29,16 @@ public class MessagesDao implements DAO<Message> {
 
         st.executeUpdate();
     }
+    public String getSenderName(int id) throws SQLException {
+        String select = "select name from users where id = ?;";
+        PreparedStatement st = conn.prepareStatement(select);
+        st.setInt(1, id);
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+            return rs.getString("name");
+        }
+        return "Name not found";
+    }
     public Optional<Integer> reciveSenderId(String uuid) throws SQLException {
         String select = "select user_id from login where session_id = ?::uuid;";
         PreparedStatement st = conn.prepareStatement(select);
