@@ -24,7 +24,7 @@
                 <div class="row header-one text-white p-1">
                     <div class="col-md-6 name pl-2">
                         <i class="fa fa-comment"></i>
-                        <h6 class="ml-1 mb-0">Ketty Peris</h6>
+                        <h6 class="ml-1 mb-0">${sender_name}</h6>
                     </div>
                     <div class="col-md-6 options text-right pr-0">
                         <i class="fa fa-window-minimize hide-chat-box hover text-center pt-1"></i>
@@ -52,25 +52,28 @@
                         <#list messages as message>
 
                             <#if withWho == message.sender_id() >
-                              <li class="send-msg float-right mb-2">
-                                <p class="pt-1 pb-1 pl-2 pr-2 m-0 rounded">
-                                    ${message.body()}
-                                </p>
-                            </li>
+                                <li class="receive-msg float-left mb-2">
+                                    <div class="sender-img">
+                                        <img src="${message.sender_url()}" class="float-left">
+                                    </div>
+                                    <div class="receive-msg-desc float-left ml-2">
+                                        <p class="bg-white m-0 pt-1 pb-1 pl-2 pr-2 rounded">
+                                            ${message.body()}
+                                        </p>
+                                        <span class="receive-msg-time">${message.sender_name()} ${message.created_at()?substring(0,19)}</span>
+                                    </div>
+                                </li>
                             <#else>
 
+                                <li class="send-msg float-right mb-2">
 
-                            <li class="receive-msg float-left mb-2">
-                                <div class="sender-img">
-                                    <img src="${message.sender_url()}" class="float-left">
-                                </div>
-                                <div class="receive-msg-desc float-left ml-2">
-                                    <p class="bg-white m-0 pt-1 pb-1 pl-2 pr-2 rounded">
+                                    <p class="pt-1 pb-1 pl-2 pr-2 m-0 rounded">
                                         ${message.body()}
                                     </p>
-                                    <span class="receive-msg-time">${message.sender_name()} ${message.created_at()}</span>
-                                </div>
-                            </li>
+                                    <span class="receive-msg-time">${message.sender_name()} ${message.created_at()?substring(0,19)}</span>
+
+                                </li>
+
                             </#if>
                         </#list>
 
@@ -81,12 +84,20 @@
                         <div class="col-md-2 options-left">
                             <i class="fa fa-smile-o"></i>
                         </div>
-                        <div class="col-md-7 pl-0">
-                            <input type="text" class="border-0" placeholder=" Send message" />
-                        </div>
+                        <form  method="post" id="myForm">
+                            <div class="col-md-7 pl-0">
+                                <input type="text" class="border-0" placeholder=" Write  message" name="body"/>
+                                <input type="text" hidden="hidden" name="sender_id" value="${sender_id}"/>
+                                <button type="submit" class="btn-outline-info btn-block">Send</button>
+                            </div>
+
+
                         <div class="col-md-3 text-right options-right">
                             <i class="fa fa-picture-o mr-2"></i>
                         </div>
+
+
+                        </form>
                     </div>
                 </div>
             </div>
