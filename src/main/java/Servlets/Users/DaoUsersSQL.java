@@ -68,4 +68,15 @@ public class DaoUsersSQL implements DAO<User> {
         }
 
     }
+    public Optional<Integer> reciveSenderId(String uuid) throws SQLException {
+        String select = "select user_id from login where session_id = ?::uuid;";
+        PreparedStatement st = conn.prepareStatement(select);
+        st.setString(1, uuid);
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+            return Optional.of(rs.getInt("user_id"));
+        }else {
+            return Optional.empty();
+        }
+    }
 }

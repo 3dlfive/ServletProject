@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class UsersServlet extends HttpServlet {
@@ -58,16 +59,16 @@ public class UsersServlet extends HttpServlet {
 
         boolean decision = Boolean.parseBoolean(req.getParameter("des_button").substring(0,req.getParameter("des_button").indexOf(",")));
         int id = Integer.parseInt(req.getParameter("des_button").substring(req.getParameter("des_button").indexOf(",")+1));
-
+        String cookies = Arrays.stream(req.getCookies()).filter(c->c.getName().equals("UID")).findFirst().get().getValue();
         if (decision) {
             try {
-                likes.save(new Action(1,id,"liked"));
+                likes.save(new Action(likes.reciveSenderId(cookies).get(),id,"liked"));
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         } else {
             try {
-                likes.save(new Action(1,id,"unliked"));
+                likes.save(new Action(likes.reciveSenderId(cookies).get(),id,"unliked"));
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
