@@ -29,7 +29,17 @@ public class MessagesDao implements DAO<Message> {
 
         st.executeUpdate();
     }
-
+    public Optional<Integer> reciveSenderId(String uuid) throws SQLException {
+        String select = "select user_id from login where session_id = ?::uuid;";
+        PreparedStatement st = conn.prepareStatement(select);
+        st.setString(1, uuid);
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+            return Optional.of(rs.getInt("user_id"));
+        }else {
+            return Optional.empty();
+        }
+    }
     @Override
     public Optional<Message> find(int id) throws SQLException {
         return Optional.empty();
@@ -63,5 +73,6 @@ public class MessagesDao implements DAO<Message> {
     public void update(Message message) throws SQLException {
 
     }
+
 
 }

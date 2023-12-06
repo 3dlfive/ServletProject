@@ -6,6 +6,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +14,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Optional;
 
 public class MessagesServlet extends HttpServlet {
     private final MessagesDao messages;
@@ -31,12 +34,16 @@ public class MessagesServlet extends HttpServlet {
         // http://localhost:8080/messages?id=1
         HashMap<String, Object> data = new HashMap<>();
         data.put("withWho",Integer.parseInt(id));
-        try {
+        Optional<Cookie> cookcies = Arrays.stream(req.getCookies()).filter(c->c.getName().equals("UID")).findFirst();
+        String cookies = cookcies.get().getValue();
 
-            data.put("messages",messages.findAllUsersMessagetoReciver(1, Integer.parseInt(id)));
+        try {
+            Optional<Integer> senders_iid = messages.reciveSenderId(cookies);
+            System.out.println(senders_iid.get());
+            data.put("messages",messages.findAllUsersMessagetoReciver(senders_iid.get(), Integer.parseInt(id)));
             try{
-                data.put("sender_id",messages.findAllUsersMessagetoReciver(1, Integer.parseInt(id)).get(0).sender_id());
-                data.put("sender_name",messages.findAllUsersMessagetoReciver(1, Integer.parseInt(id)).get(0).sender_name());
+                data.put("sender_id",messages.findAllUsersMessagetoReciver(senders_iid.get(), Integer.parseInt(id)).get(0).sender_id());
+                data.put("sender_name",messages.findAllUsersMessagetoReciver(senders_iid.get(), Integer.parseInt(id)).get(0).sender_name());
             } catch (IndexOutOfBoundsException e){
                 // for new chat
                 data.put("sender_id",1);
@@ -60,15 +67,15 @@ public class MessagesServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String body = req.getParameter("body");
         String sender_id2 = req.getParameter("sender_id");
-        System.out.println(sender_id2);
         int reciver_id = Integer.parseInt(req.getPathInfo().substring(1));
-        int sender_id = 1;
+        String cookies = Arrays.stream(req.getCookies()).filter(c->c.getName().equals("UID")).findFirst().get().getValue();
+
         try {
-            messages.save(new Message(sender_id,reciver_id,body));
+            Optional<Integer> sender_id  = messages.reciveSenderId(cookies);
+            messages.save(new Message(sender_id.get(),reciver_id,body));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(body);
         this.doGet(req,resp);
     }
 }
