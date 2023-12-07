@@ -1,18 +1,22 @@
 package Helpers;
 
 import java.net.URISyntaxException;
+import java.util.Objects;
 
 public class ResourcesOps {
 
     public static String dirUnsafe(String prefix) {
         try {
             return
-                    ResourcesOps.class
-                            .getClassLoader()
-                            .getResource(prefix)
+                    Objects.requireNonNull(ResourcesOps.class
+                                    .getClassLoader()
+                                    .getResource(prefix))
                             .toURI()
                             .getPath();
         } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        } catch (NullPointerException e) {
+            System.out.println("fc");
             throw new RuntimeException(e);
         }
     }

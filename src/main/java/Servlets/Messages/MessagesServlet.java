@@ -29,7 +29,7 @@ public class MessagesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_32);
-        cfg.setDirectoryForTemplateLoading(new File(ResourcesOps.dirUnsafe("static/templates")));
+        cfg.setClassForTemplateLoading(this.getClass(),"/static/templates");
         String id = req.getPathInfo().substring(1);
         // http://localhost:8080/messages?id=1
         HashMap<String, Object> data = new HashMap<>();

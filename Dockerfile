@@ -1,5 +1,5 @@
 
-FROM openjdk:latest
+FROM openjdk:20
 COPY ./target/tinder-app-0.0.1-SNAPSHOT-jar-with-dependencies.jar  app.jar
 EXPOSE 5000
 #ENV JDBC_DATABASE_URL "spark-master"
