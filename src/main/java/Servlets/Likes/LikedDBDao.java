@@ -1,7 +1,6 @@
 package Servlets.Likes;
 
 import Servlets.DAO;
-import Servlets.Users.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +19,10 @@ public class LikedDBDao implements DAO<Action> {
     @Override
     public void save(Action liked) throws SQLException {
         PreparedStatement st;
+        //Переделать если уже есть такой лайк перезаписать
         String insert = "INSERT INTO actions (user_id, profile_id, action) SELECT ?, ?, ? WHERE NOT EXISTS ( SELECT 1 FROM actions WHERE user_id = ? AND profile_id = ? LIMIT 1 );";
+
+
         st = conn.prepareStatement(insert);
         st.setInt(1, liked.user_id());
         st.setInt(2, liked.profile_id());
@@ -38,7 +40,7 @@ public class LikedDBDao implements DAO<Action> {
 
     @Override
     public List<Action> findAll() throws SQLException {
-        String select = "select user_id,profile_id, action, users.name,users.url as profile_name,op_at from actions join users on actions.profile_id = users.id where ACTION LIKE 'liked'";
+        String select = "select user_id,profile_id, action, users.name as profile_name,op_at,users.url from actions join users on actions.profile_id = users.id where ACTION LIKE 'liked'";
         PreparedStatement st = conn.prepareStatement(select);
         ResultSet rs = st.executeQuery();
         ArrayList<Action> data = new ArrayList<>();
