@@ -24,7 +24,7 @@ public class App {
             Server server = new Server(8080);
             ServletContextHandler handler = new ServletContextHandler();
             //DB conection
-            Database db = new Database("jdbc:postgresql://localhost:5432/tinder_step","postgres","pg123456");
+            Database db = new Database("jdbc:postgresql://postgres:5432/tinder_step","postgres","pg123456");
             Connection conn = db.mkConn();
 
             EnumSet<DispatcherType> tpe = EnumSet.of(DispatcherType.REQUEST);

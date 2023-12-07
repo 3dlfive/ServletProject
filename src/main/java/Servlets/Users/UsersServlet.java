@@ -40,7 +40,7 @@ public class UsersServlet extends HttpServlet {
 //        }
 
             Configuration cfg = new Configuration(Configuration.VERSION_2_3_32);
-            cfg.setDirectoryForTemplateLoading(new File(ResourcesOps.dirUnsafe("static/templates")));
+            cfg.setClassForTemplateLoading(this.getClass(),"/static/templates");
             HashMap<String, Object> data = new HashMap<>();
         try {
             data.put("user",users.find(counter).get());
