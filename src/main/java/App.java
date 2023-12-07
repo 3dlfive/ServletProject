@@ -7,6 +7,7 @@ import Servlets.Login.LoginService;
 import Servlets.Login.LoginServlet;
 import Servlets.Messages.MessagesDao;
 import Servlets.Messages.MessagesServlet;
+import Servlets.RedirectServlet;
 import Servlets.StylesServlet;
 import Servlets.Users.DaoUsersSQL;
 import Servlets.Users.UsersServlet;
@@ -62,6 +63,9 @@ public class App {
 
 
             }
+            handler.addServlet(new ServletHolder(new RedirectServlet("/login")), "/*");
+
+
             server.setHandler(handler);
             server.start();
             server.join();
