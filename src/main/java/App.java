@@ -1,5 +1,6 @@
 import Helpers.Database;
 
+import Servlets.Filters.AuthFilter;
 import Servlets.Likes.LikedDBDao;
 import Servlets.Likes.LikedServlet;
 import Servlets.Login.LoginService;
@@ -13,7 +14,9 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
+import javax.servlet.DispatcherType;
 import java.sql.Connection;
+import java.util.EnumSet;
 
 public class App {
         public static void main(String[] args) throws Exception {
@@ -23,6 +26,10 @@ public class App {
             Database db = new Database("jdbc:postgresql://localhost:5432/tinder_step","postgres","pg123456");
             Connection conn = db.mkConn();
 
+            EnumSet<DispatcherType> tpe = EnumSet.of(DispatcherType.REQUEST);
+
+
+
             //Servlets
             handler.addServlet("Servlets.HelloServlet", "/hello");
             LikedDBDao selData = new LikedDBDao(conn);
@@ -31,16 +38,17 @@ public class App {
                 DaoUsersSQL users = new DaoUsersSQL(conn);
                 UsersServlet usersServlet = new UsersServlet(users, selData);
                 handler.addServlet(new ServletHolder(usersServlet), "/users");
+                handler.addFilter(AuthFilter.class,"/users",tpe);
             }
             {
                 LikedServlet liked = new LikedServlet(selData);
                 handler.addServlet(new ServletHolder(liked), "/liked");
-
+                handler.addFilter(AuthFilter.class,"/liked",tpe);
             }
             {
                 MessagesServlet chat = new MessagesServlet(new MessagesDao(conn));
                 handler.addServlet(new ServletHolder(chat), "/messages/*");
-
+                handler.addFilter(AuthFilter.class,"/messages/*",tpe);
             }
             {
 
@@ -52,8 +60,8 @@ public class App {
                     handler.addServlet(new ServletHolder(new StylesServlet("static")), "/static/*");
 
 
-            }
 
+            }
             server.setHandler(handler);
             server.start();
             server.join();

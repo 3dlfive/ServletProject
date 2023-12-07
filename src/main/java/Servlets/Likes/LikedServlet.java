@@ -32,11 +32,11 @@ public class LikedServlet extends HttpServlet {
 
         HashMap<String, Object> data = new HashMap<>();
 
-        try {
-            System.out.println("tesst" +likes.findAll());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            System.out.println("tesst" +likes.findAll());
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
         try {
 
             data.put("rows",likes.findAll());

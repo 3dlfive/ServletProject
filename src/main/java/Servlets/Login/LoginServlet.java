@@ -1,5 +1,6 @@
 package Servlets.Login;
 
+import Helpers.CookiesHelper;
 import Helpers.ResourcesOps;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -45,15 +46,17 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
         String pwd = req.getParameter("password");
+        UUID uuid = UUID.randomUUID();
+        CookiesHelper cookieHelper = new CookiesHelper(resp, req, uuid);
         try {
             Optional<Login> l = logindata.findByUserandPassword(login,pwd);
             if (l.isEmpty()) {
                 this.status = "Login failed. Cred not found";
                 resp.sendRedirect("/login");
             }else {
-                UUID uuid = UUID.randomUUID();
+
                 logindata.insertCookies(new Login(l.get().user_id(),uuid)); // save to db
-                resp.addCookie(new Cookie("UID",String.valueOf(uuid))); // save cookies to user
+                cookieHelper.setCookies(); // save cookies to user
                 resp.sendRedirect("/users");
             }
         } catch (SQLException e) {
