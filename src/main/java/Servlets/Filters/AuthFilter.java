@@ -10,8 +10,17 @@ import java.util.Optional;
 public class AuthFilter implements HttpFilter{
     @Override
     public boolean myCheckLogic(HttpServletRequest request) {
-        Optional<Cookie> cookies = Arrays.stream(request.getCookies()).filter(c->c.getName().equals("UID")).findFirst();
-        return cookies.isPresent();
+        Cookie[] cookies = request.getCookies();
+
+        if (cookies != null) {
+            Optional<Cookie> cookieOptional = Arrays.stream(cookies)
+                    .filter(c -> "UID".equals(c.getName()))
+                    .findFirst();
+
+            return cookieOptional.isPresent();
+        }
+
+        return false;
     }
 
     @Override
